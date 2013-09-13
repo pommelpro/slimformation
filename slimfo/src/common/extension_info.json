@@ -1,0 +1,19 @@
+{
+    "name": "Slimformation",
+    "version": "1.2.1",
+    "description": "Slimformation",
+    "creator": "Knight Lab",
+    "homepage_url": "http://knightlab.northwestern.edu",
+    "background_scripts": ["lib/js/underscore-min.js", "readingScore.js", "main.js"],
+    "browser_button": {
+        "tooltipText": "Slimformation",
+        "caption": "Slimformation",
+        "icon": "icons/button.png",
+        "popup": {
+            "url": "popup.html",
+            "width": 600,
+            "height": 520
+        }
+    },
+    "debug": true
+}
