@@ -29,6 +29,11 @@ h3 {
     height: 90px;
 }
 
+.navbar li:hover {
+    color: #dddddd;
+}
+
+
 li#activity-nav {
   background: url('../images/activity_white.png') center no-repeat;
   background-size: 25px 25px;
