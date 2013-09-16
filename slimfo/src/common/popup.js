@@ -121,6 +121,8 @@ var initGoals = function() {
   });
 }; // initGoals
 
+var TRANSITION_DURATION = 500;
+
 KangoAPI.onReady(function() {
   $('.content-pane').hide();
   $('#activity').show();
@@ -134,22 +136,34 @@ KangoAPI.onReady(function() {
   $('#activity-nav').click(function() {
     $('ul.nav li').removeClass('active');
     $(this).addClass('active');
-    $('.content-pane').hide();
-    $('#activity').show();
+    $('.content-pane').hide({
+      duration: TRANSITION_DURATION
+    });
+    $('#activity').show({
+      duration: 0
+    });
   });
 
   $('#goals-nav').click(function() {
     $('ul.nav li').removeClass('active');
     $(this).addClass('active');
-    $('.content-pane').hide();
-    $('#goals').show();
+    $('.content-pane').hide({
+      duration: TRANSITION_DURATION
+    });
+    $('#goals').show({
+      duration: 0
+    });
   });
 
   $('#prescription-nav').click(function() {
     $('ul.nav li').removeClass('active');
     $(this).addClass('active');
-    $('.content-pane').hide();
-    $('#prescription').show();
+    $('.content-pane').hide({
+      duration: TRANSITION_DURATION
+    });
+    $('#prescription').show({
+      duration: 0
+    });
   });
 
   nv.addGraph(function() {

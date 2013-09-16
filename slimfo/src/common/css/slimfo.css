@@ -59,6 +59,11 @@ li#prescription-nav.active {
   background-color: #27AE60;
 }
 
+.prescription {
+  margin-top: 20px;
+  width: 360px;
+}
+
 #main-content {
     margin-top: 50px;
 }
@@ -69,6 +74,7 @@ li#prescription-nav.active {
 
 .content-pane {
     width: 420px;
+    height: 470px;
 } 
 html {
      overflow-y: scroll;
