@@ -154,7 +154,7 @@ KangoAPI.onReady(function() {
 
   nv.addGraph(function() {
     var width = 320;
-    var height = 400;
+    var height = 300;
     var chart = nv.models.pieChart()
       .x(function(d) { return d.key; })
       .values(function(d) {
@@ -162,8 +162,8 @@ KangoAPI.onReady(function() {
       })
       .showLabels(false)
       .color(PIE_CHART_COLORS)
-      .width(width)
-      .height(height)
+      //.width(width)
+      //.height(height)
       .donut(true);
     d3.select('#chart svg')
       .datum([pieChartData()])
