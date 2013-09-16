@@ -6,16 +6,57 @@
     return data;
 }; // pieChartData
 
-function buildActivityTable() {
+var formatTime = function(ms) {
+    var s = ms / 1000;
+    var m = s / 60;
+    var h = Math.round(m / 60);
+    m = Math.round(m - h * 60);
+    if (m < 0) { m = 0; }
+    if (h > 0) {
+      return '' + h + 'h ' + m + 'm';
+    } else {
+      return '' + m + 'm';
+    }
+}
+
+var buildActivityTable = function() {
   // TODO: show top n domains only
   $.each(categoryData(), function(i, category) {
       $('table#cat-source-table tbody').append(
-        '<tr><td><b>' + category.name + '</b></td><td></td></tr>');
+        '<tr style="background-color:#f9f9f9"><td><b>'
+        + category.name + '</b></td><td></td></tr>');
+      var top1 = [null, 0];
+      var top2 = [null, 0];
+      var top3 = [null, 0];
       $.each(category.domains, function(url, time) {
-        $('table#cat-source-table tbody').append(
-        '<tr><td>' + url + '</td><td>' + moment.duration(time).humanize()
-        + '</td></tr>');
+        if (time && time > top1[1]) {
+          top1 = [url, time];
+        } else if (time && time > top2[1]) {
+          top2 = [url, time];
+        } else if (time && time > top3[1]) {
+          top3 = [url, time];
+        }  
+        //$('table#cat-source-table tbody').append(
+        //'<tr><td>' + url + '</td><td>' + moment.duration(time).humanize()
+        //+ '</td></tr>');
       });
+      if (top1[0] !== null) {
+        $('table#cat-source-table tbody').append(
+          '<tr><td>' + top1[0] + '</td><td>'
+           + formatTime(top1[1]) + '</td></tr>');
+      }
+      if (top2[0] !== null) {
+        $('table#cat-source-table tbody').append(
+          '<tr><td>' + top2[0] + '</td><td>'
+          + formatTime(top2[1]) + '</td></tr>');
+      }
+      if (top3[0] !== null) {
+        $('table#cat-source-table tbody').append(
+          '<tr><td>' + top3[0] + '</td><td>'
+          + formatTime(top3[1]) + '</td></tr>');
+      }
+      $('table#cat-source-table tbody').append(
+        '<tr><td></td><td></td></tr>');
   });
 }; // buildActivityTable
 
