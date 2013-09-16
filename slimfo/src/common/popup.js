@@ -20,7 +20,6 @@ var formatTime = function(ms) {
 }
 
 var buildActivityTable = function() {
-  // TODO: show top n domains only
   $.each(categoryData(), function(i, category) {
       $('table#cat-source-table tbody').append(
         '<tr style="background-color:#f9f9f9"><td><b>'
@@ -36,9 +35,6 @@ var buildActivityTable = function() {
         } else if (time && time > top3[1]) {
           top3 = [url, time];
         }  
-        //$('table#cat-source-table tbody').append(
-        //'<tr><td>' + url + '</td><td>' + moment.duration(time).humanize()
-        //+ '</td></tr>');
       });
       if (top1[0] !== null) {
         $('table#cat-source-table tbody').append(
@@ -217,8 +213,6 @@ KangoAPI.onReady(function() {
       })
       .showLabels(false)
       .color(PIE_CHART_COLORS)
-      //.width(width)
-      //.height(height)
       .donut(true);
     d3.select('#chart svg')
       .datum([pieChartData()])
