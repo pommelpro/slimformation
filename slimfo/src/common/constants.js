@@ -55,13 +55,24 @@ var CATEGORY_COLORS = {
     'Sports': '#2ECC71'
 }
 */
+
+var CATEGORY_NAMES = [
+  'Politics',
+  'Business',
+  'Technology',
+  'Sports',
+  'Science',
+  'Entertainment',
+  'Other'
+]
+
 var PIE_CHART_COLORS = [
-  '#e377c2', // Other
-  '#E67E22', // Technology
-  '#F1C40F', // Entertainment
-  '#E74C3C', // Science
-  '#9B59B6', // Business
   '#3498DB', // Politics
-  '#2ECC71'  // Sports
+  '#9B59B6', // Business
+  '#E67E22', // Technology
+  '#2ECC71', // Sports
+  '#E74C3C', // Science
+  '#F1C40F', // Entertainment
+  '#e377c2'  // Other
 ];
 

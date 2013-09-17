@@ -1,7 +1,10 @@
 ﻿var pieChartData = function() {
     var data = [];
-    $.each(categoryData(), function(i, cat) {
-        data[data.length] = { key:i, y:cat['time'] };
+    var categories = categoryData();
+    $.each(CATEGORY_NAMES, function(i, name) {
+        console.log(name);
+        var cat = categories[name];
+        data[data.length] = { key:name, y:cat['time'] };
     });
     return data;
 }; // pieChartData
@@ -20,7 +23,8 @@ var formatTime = function(ms) {
 }
 
 var buildActivityTable = function() {
-  $.each(categoryData(), function(i, category) {
+  $.each(CATEGORY_NAMES, function(i, cat) {
+      var category = categoryData()[cat];
       $('table#cat-source-table tbody').append(
         '<tr style="background-color:#f9f9f9"><td><b>'
         + category.name + '</b></td><td></td></tr>');
@@ -113,43 +117,43 @@ var buildPrescription = function(category, goals, totalGoalsTime) {
 
 var buildOverallDistribution = function(goals) {
   $('#overall-distribution').html('');
-  $.each(categoryData(), function(i, cat) {
-    console.log(i);
-    if (i === 'Other') { return true; } // continue
+  $.each(CATEGORY_NAMES, function(i, name) {
+    if (name === 'Other') { return true; } // continue
     $('#overall-distribution').append(
       readingDistributionTemplate({
-        width: goals.categoryGoal(i) / goals.goalsTotal()*100,
-        category:i
+        width: goals.categoryGoal(name) / goals.goalsTotal()*100,
+        category: name
     }));
   });
 }; // buildOverallDistribution
 
 var buildGoalsSliders = function(categories, goals) {
   $('#user-reading-goals').html('');
-  $.each(categories, function(i, cat) {
-    if (i === 'Other') { return true; } // continue
+  $.each(CATEGORY_NAMES, function(i, name) {
+    if (name === 'Other') { return true; } // continue
     $('#user-reading-goals').append(
       userReadingGoalTemplate({
-        category: i,
-        goal: goals.categoryGoal(i)
+        category: name,
+        goal: goals.categoryGoal(name)
       }));
   });
 };
 
 var buildGoalsOverview = function(categories, goals) {
   var totalTime = 0;
-  $.each(categories, function(i, cat) {
-    if (i === 'Other') { return true; } // continue
+  $.each(CATEGORY_NAMES, function(i, name) {
+    if (name === 'Other') { return true; } // continue
+    var cat = categoryData()[name];
     totalTime += cat['time'];
   });
   $('#reading-budgets').html('');
-  //$('#user-reading-goals').html('');
-  $.each(categories, function(i, cat) {
-    if (i === 'Other') { return true; } // continue
+  $.each(CATEGORY_NAMES, function(i, name) {
+    if (name === 'Other') { return true; } // continue
+    var cat = categoryData()[name];
     $('#reading-budgets').append(readingBudgetTemplate({
-      category: i,
+      category: name,
       actualTime:cat['time']/totalTime*100,
-      goalTime: goals.categoryGoal(i) / goals.goalsTotal() * 100
+      goalTime: goals.categoryGoal(name) / goals.goalsTotal() * 100
     }));
     buildPrescription(cat, goals, totalTime);
   }); // end each categories
