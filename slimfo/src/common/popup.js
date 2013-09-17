@@ -85,6 +85,7 @@ var buildPrescription = function(category, goals, totalGoalsTime) {
         prescriptionGoals = overBudgetTemplate({ category: category.name });
     } 
     var prescriptionId = '#' + category.name + '-prescription';
+    $(prescriptionId).html('');
     $(prescriptionId).append('<div><p><b>Goals:</b> '
         + prescriptionGoals + '</p></div>');
     $(prescriptionId).append(readingDiversity(category.name, category));
@@ -113,6 +114,8 @@ var buildPrescription = function(category, goals, totalGoalsTime) {
 var buildOverallDistribution = function(goals) {
   $('#overall-distribution').html('');
   $.each(categoryData(), function(i, cat) {
+    console.log(i);
+    if (i === 'Other') { return true; } // continue
     $('#overall-distribution').append(
       readingDistributionTemplate({
         width: goals.categoryGoal(i) / goals.goalsTotal()*100,
@@ -120,6 +123,37 @@ var buildOverallDistribution = function(goals) {
     }));
   });
 }; // buildOverallDistribution
+
+var buildGoalsSliders = function(categories, goals) {
+  $('#user-reading-goals').html('');
+  $.each(categories, function(i, cat) {
+    if (i === 'Other') { return true; } // continue
+    $('#user-reading-goals').append(
+      userReadingGoalTemplate({
+        category: i,
+        goal: goals.categoryGoal(i)
+      }));
+  });
+};
+
+var buildGoalsOverview = function(categories, goals) {
+  var totalTime = 0;
+  $.each(categories, function(i, cat) {
+    if (i === 'Other') { return true; } // continue
+    totalTime += cat['time'];
+  });
+  $('#reading-budgets').html('');
+  //$('#user-reading-goals').html('');
+  $.each(categories, function(i, cat) {
+    if (i === 'Other') { return true; } // continue
+    $('#reading-budgets').append(readingBudgetTemplate({
+      category: i,
+      actualTime:cat['time']/totalTime*100,
+      goalTime: goals.categoryGoal(i) / goals.goalsTotal() * 100
+    }));
+    buildPrescription(cat, goals, totalTime);
+  }); // end each categories
+};
 
 var updateSliderValue = function(event, goals) {
   /* TODO: update goals overview */
@@ -131,30 +165,14 @@ var updateSliderValue = function(event, goals) {
 
 var initGoals = function() {
   var categories = categoryData();
-  var totalTime = 0;
   var goals = new GoalsCollection();
   buildOverallDistribution(goals);
-  $.each(categories, function(i, cat) {
-    if (i === 'Other') { return true; } // continue
-    totalTime += cat['time'];
-  });
-  $.each(categories, function(i, cat) {
-    if (i === 'Other') { return true; } // continue
-    $('#reading-budgets').append(readingBudgetTemplate({
-      category: i,
-      actualTime:cat['time']/totalTime*100,
-      goalTime: goals.categoryGoal(i) / goals.goalsTotal() * 100
-    }));
-    $('#user-reading-goals').append(
-        userReadingGoalTemplate({
-          category: i,
-          goal: goals.categoryGoal(i)
-        }));
-    buildPrescription(cat, goals, totalTime);
-  }); // end each categories
+  buildGoalsOverview(categories, goals);
+  buildGoalsSliders(categories, goals);
   $('#user-reading-goals input').slider()
     .on('slideStop', function(event) {
         goals = updateSliderValue(event, goals);
+        buildGoalsOverview(categories, goals);
   });
 }; // initGoals
 
