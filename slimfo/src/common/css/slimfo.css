@@ -87,6 +87,7 @@ html {
 #chart svg {
      height: 300px;
      width: 400px;
+     margin-left: -20px;
 }
 #activity-chart-container {
    text-align: center; 

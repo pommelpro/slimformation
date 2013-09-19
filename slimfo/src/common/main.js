@@ -9,7 +9,8 @@ if (URLMeta == null) {
 }
 
 var fetchUrlInfo = function(url) {
-    serviceURL = 'http://calm-thicket-4369.herokuapp.com/categorize.json';
+    //serviceURL = 'http://calm-thicket-4369.herokuapp.com/categorize.json';
+    serviceURL = 'http://127.0.0.1:5000/categorize';
     details = { url: serviceURL + "?url=" + url, contentType: 'json' };
     kango.xhr.send(details, function(data) {
         if ( (data.status == 200 || data.status == 202)
@@ -18,19 +19,21 @@ var fetchUrlInfo = function(url) {
             // short_url, author, dek, total_pages, title, excerpt,
             // lead_image_url, date_published, rendered_pages
             var info = {
-                category: data.response['best-category'],
+                category: data.response['category'],
                 domain: data.response['domain'],
-                content: data.response['content'],
+                //content: data.response['content'],
                 url: data.response['url'],
-                wordCount: data.response['word_count']
+                //wordCount: data.response['word_count']
+                readingScore: data.response['readingScore']
             };
-            var readingScore = new ReadingScore(info['content']);
+            //var readingScore = new ReadingScore(info['content']);
             var meta =  {
                 category: info['category'],
                 domain: info['domain'],
                 url: info['url'],
-                wordCount: info['wordCount'],
-                readingScore: readingScore.fleschKincaid(),
+                //wordCount: info['wordCount'],
+                //readingScore: readingScore.fleschKincaid(),
+                readingScore: info['readingScore'],
                 totalTime: 0
             };
             if (URLMeta[url] != null) {
@@ -47,7 +50,7 @@ var fetchUrlInfo = function(url) {
 
 var newURL = function(event) {
     var time = new Date();
-    if (currentURL != null) {
+    if (currentURL != null && currentURL.indexOf('http') == 0) {
         var delta = time - currentURLStartTime;
         var meta = URLMeta[currentURL];
         if (meta != null) {
@@ -58,8 +61,10 @@ var newURL = function(event) {
     }
     currentURLStartTime = time;
     currentURL = event.target.getUrl();
-    if (URLMeta[currentURL] == null) {
+    if (currentURL.indexOf('http') == 0) {
+      if (URLMeta[currentURL] == null) {
         fetchUrlInfo(currentURL); 
+      }
     }
 }
 
