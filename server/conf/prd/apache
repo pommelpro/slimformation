@@ -9,5 +9,5 @@
 
     WSGIDaemonProcess slimformation display-name=%{GROUP} maximum-requests=10000
     WSGIProcessGroup slimformation
-    WSGIScriptAlias / /home/apps/sites/slimformation/conf/prd/wsgi.py
+    WSGIScriptAlias / /home/apps/sites/slimformation/server/conf/prd/wsgi.py
 </VirtualHost>
