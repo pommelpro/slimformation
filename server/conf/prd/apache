@@ -1,13 +1,13 @@
 <VirtualHost *:80>
-    ServerName {{ project_name }}.knightlab.com
+    ServerName slimformation.knightlab.com
     ServerAdmin admin@knightlab.com
-    ErrorLog /var/log/apache2/{{ project_name }}.log
+    ErrorLog /var/log/apache2/slimformation.log
 
     LogLevel info
 
     SetEnvIf X-Forwarded-Protocol "^https$" HTTPS=on
 
-    WSGIDaemonProcess {{ project_name }} display-name=%{GROUP} maximum-requests=10000
-    WSGIProcessGroup {{ project_name }}
-    WSGIScriptAlias / /home/apps/sites/{{ project_name }}/conf/prd/wsgi.py
+    WSGIDaemonProcess slimformation display-name=%{GROUP} maximum-requests=10000
+    WSGIProcessGroup slimformation
+    WSGIScriptAlias / /home/apps/sites/slimformation/conf/prd/wsgi.py
 </VirtualHost>
