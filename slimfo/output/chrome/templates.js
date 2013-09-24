@@ -48,7 +48,7 @@ var diverseTemplate = _.template(
 
 var biasedTemplate = _.template(
     "Oh no! You've been viewing too much content about <%= category %>"
-    + "from <%= domains %>. Try some other sources!");
+    + " from <%= domains %>. Try some other sources!");
 
 var metGoalTemplate = _.template(
     'Congrats! You met your goal for <%= category %>');
