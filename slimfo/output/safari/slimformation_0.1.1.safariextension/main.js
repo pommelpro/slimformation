@@ -11,7 +11,8 @@ if (URLMeta == null) {
 var fetchUrlInfo = function(url) {
     //serviceURL = 'http://calm-thicket-4369.herokuapp.com/categorize.json';
     //serviceURL = 'http://127.0.0.1:5000/categorize';
-    serviceURL = 'http://slimformation.knilab.com/categorize';
+    //serviceURL = 'http://slimformation.knilab.com/categorize';
+    serviceURL = 'http://slimformation.knightlab.com/categorize';
     details = { url: serviceURL + "?url=" + url, contentType: 'json' };
     kango.xhr.send(details, function(data) {
         if ( (data.status == 200 || data.status == 202)

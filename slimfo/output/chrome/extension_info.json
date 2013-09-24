@@ -14,7 +14,7 @@
   "id": "{d04473cf-d3a0-11e0-9b3e-14d64d08fdac}", 
   "browser_button": {
     "caption": "Slimformation", 
-    "icon": "icons/button.png", 
+    "icon": "images/icons/38.png", 
     "popup": {
       "url": "popup.html", 
       "width": 600, 

@@ -14,7 +14,7 @@
   "id": "http://kangoextensions.com/extensions/popupdemo", 
   "browser_button": {
     "caption": "Slimformation", 
-    "icon": "icons/button.png", 
+    "icon": "images/icons/38.png", 
     "popup": {
       "url": "popup.html", 
       "width": 600, 
