@@ -17,24 +17,16 @@ var fetchUrlInfo = function(url) {
     kango.xhr.send(details, function(data) {
         if ( (data.status == 200 || data.status == 202)
              && data.response != null) {
-            // add'l response fields: direction, next_page_id
-            // short_url, author, dek, total_pages, title, excerpt,
-            // lead_image_url, date_published, rendered_pages
             var info = {
                 category: data.response['category'],
                 domain: data.response['domain'],
-                //content: data.response['content'],
                 url: data.response['url'],
-                //wordCount: data.response['word_count']
                 readingScore: data.response['readingScore']
             };
-            //var readingScore = new ReadingScore(info['content']);
             var meta =  {
                 category: info['category'],
                 domain: info['domain'],
                 url: info['url'],
-                //wordCount: info['wordCount'],
-                //readingScore: readingScore.fleschKincaid(),
                 readingScore: info['readingScore'],
                 totalTime: 0
             };
@@ -50,10 +42,11 @@ var fetchUrlInfo = function(url) {
     });
 }
 
-var newURL = function(event) {
+var newURL = function(event, url) {
     var time = new Date();
     if (currentURL != null && currentURL.indexOf('http') == 0) {
         var delta = time - currentURLStartTime;
+        console.log('' + delta + ': ' + currentURL);
         var meta = URLMeta[currentURL];
         if (meta != null) {
             meta['totalTime'] = meta['totalTime'] + delta;
@@ -62,7 +55,11 @@ var newURL = function(event) {
         }
     }
     currentURLStartTime = time;
-    currentURL = event.target.getUrl();
+    if (event != null) {
+        currentURL = event.target.getUrl();
+    } else if (url != null) {
+        currentURL = url;
+    }
     if (currentURL.indexOf('http') == 0) {
       if (URLMeta[currentURL] == null) {
         fetchUrlInfo(currentURL); 
@@ -71,4 +68,39 @@ var newURL = function(event) {
 }
 
 kango.browser.addEventListener(kango.browser.event.TAB_CHANGED, newURL);
-kango.browser.addEventListener(kango.browser.event.BEFORE_NAVIGATE, newURL);
+// binding to DOCUMENT_COMPLETE instead of BEFORE_NAVIGATE since we want
+// newURL to get the newly loaded URL 
+kango.browser.addEventListener(kango.browser.event.DOCUMENT_COMPLETE, newURL);
+
+var updateURL = function() {
+  console.log(document.visibilityState);
+  if (document.webkitHidden) {
+      console.log('hidden');
+  }
+  var name = kango.browser.getName();
+  if (name == 'chrome') {
+    chrome.tabs.query({
+      active: true,
+      lastFocusedWindow: true
+    }, function(array_of_Tabs) {
+      var tab = array_of_Tabs[0];
+      var url = tab.url;
+      if (url != currentURL) {
+         newURL(null, url);
+      }
+    });
+  } else if (name == 'firefox') {
+    var currentWindow = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator).getMostRecentWindow("navigator:browser");
+    var currBrowser = currentWindow.getBrowser();
+    var currURL = currBrowser.currentURI.spec;
+    console.log(currURL);
+    if (currURL != currentURL) {
+        newURL(null, currURL);
+    }
+  }
+};
+
+// updateURL every 10 seconds -- in case the user has multiple browser
+// instances open, since there does not seem to be an event we can bind to
+// for switching between browser instances
+setInterval(updateURL, 10000);
