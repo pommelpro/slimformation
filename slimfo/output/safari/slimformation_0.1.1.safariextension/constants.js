@@ -27,6 +27,7 @@ var READING_LEVELS = {
 
 var CATEGORY_MAP = {
     'undefined': 'Other',
+    'unknown': 'Other',
     'computer_internet': 'Technology',
     'arts_entertainment': 'Entertainment',
     'recreation': 'Entertainment',
