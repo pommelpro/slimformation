@@ -1,6 +1,6 @@
 <?xml version="1.0" ?><RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
     <Description about="urn:mozilla:install-manifest">
-        <em:id>{d03fdff0-d3a0-11e0-baa5-14d64d08fdac}</em:id>
+        <em:id>{27f94ab5-72d6-31f7-8bad-b27e8b2bf4d0}</em:id>
         <em:name>Slimformation</em:name>
         <em:version>0.1.1</em:version>
         <em:targetApplication>
@@ -14,7 +14,7 @@
 		<em:description>Slimformation</em:description>
         <em:creator>Knight Lab</em:creator>
 		<em:homepageURL>http://knightlab.northwestern.edu</em:homepageURL>
-		<em:iconURL>chrome://kango-d03fdff0-d3a0-11e0-baa5-14d64d08fdac/content/icons/icon32.png</em:iconURL>
+		<em:iconURL>chrome://kango-27f94ab5-72d6-31f7-8bad-b27e8b2bf4d0/content/icons/icon32.png</em:iconURL>
 		
 		
 		

@@ -3,7 +3,7 @@
   "name": "Slimformation", 
   "creator": "Knight Lab", 
   "description": "Slimformation", 
-  "package_id": "kango-d03fdff0-d3a0-11e0-baa5-14d64d08fdac", 
+  "package_id": "kango-27f94ab5-72d6-31f7-8bad-b27e8b2bf4d0", 
   "background_scripts": [
     "lib/js/underscore-min.js", 
     "readingScore.js", 
@@ -12,7 +12,7 @@
   "homepage_url": "http://knightlab.northwestern.edu", 
   "version": "0.1.1", 
   "debug": true, 
-  "id": "{d03fdff0-d3a0-11e0-baa5-14d64d08fdac}", 
+  "id": "{27f94ab5-72d6-31f7-8bad-b27e8b2bf4d0}", 
   "browser_button": {
     "caption": "Slimformation", 
     "icon": "images/icons/16.png", 
