@@ -33,8 +33,11 @@ var buildActivityTable = function() {
       var top3 = [null, 0];
       $.each(category.domains, function(url, time) {
         if (time && time > top1[1]) {
+          top3 = top2;
+          top2 = top1;
           top1 = [url, time];
         } else if (time && time > top2[1]) {
+          top3 = top2;
           top2 = [url, time];
         } else if (time && time > top3[1]) {
           top3 = [url, time];
@@ -81,7 +84,7 @@ var readingDiversity = function(category, categoryData) {
 
 var buildPrescription = function(category, goals, totalGoalsTime) {
     var diff = category.time/totalGoalsTime -
-        goals.categoryGoal(category.name)/goals.goalsTotal;
+        goals.categoryGoal(category.name)/goals.goalsTotal();
     var prescriptionGoals = metGoalTemplate({ category: category.name });
     if (diff < -0.05) {
         prescriptionGoals = unmetGoalTemplate({ category: category.name });
@@ -101,6 +104,7 @@ var buildPrescription = function(category, goals, totalGoalsTime) {
             category: category.name,
             readingLevel: readingLevelAverage
         });
+        console.log('Reading level avg: ' + readingLevelAverage);
         if (readingLevelAverage >= READING_LEVELS[1]['threshold']) {
             readingLevelPrescription += READING_LEVELS[1]['message'];
         } else if (readingLevelAverage >= READING_LEVELS[2]['threshold']) {

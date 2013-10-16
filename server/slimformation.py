@@ -151,7 +151,8 @@ def categorize():
         url=url,
         category=category,
         domain=domain,
-        readingScore="%.2f"%flesch_kincaid(text)
+        #readingScore="%.2f"%flesch_kincaid(text)
+        readingScore=flesch_kincaid(text)
     )
 
         
