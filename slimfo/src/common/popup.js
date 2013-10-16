@@ -4,7 +4,7 @@
     $.each(CATEGORY_NAMES, function(i, name) {
         console.log(name);
         var cat = categories[name];
-        data[data.length] = { key:name, y:cat['time'] };
+        data[data.length] = { key:name, y:cat['time']|1 };
     });
     return data;
 }; // pieChartData
@@ -32,14 +32,14 @@ var buildActivityTable = function() {
       var top2 = [null, 0];
       var top3 = [null, 0];
       $.each(category.domains, function(url, time) {
-        if (time && time > top1[1]) {
+        if (time && time >= top1[1]) {
           top3 = top2;
           top2 = top1;
           top1 = [url, time];
-        } else if (time && time > top2[1]) {
+        } else if (time && time >= top2[1]) {
           top3 = top2;
           top2 = [url, time];
-        } else if (time && time > top3[1]) {
+        } else if (time && time >= top3[1]) {
           top3 = [url, time];
         }  
       });
@@ -86,7 +86,7 @@ var buildPrescription = function(category, goals, totalGoalsTime) {
     var diff = category.time/totalGoalsTime -
         goals.categoryGoal(category.name)/goals.goalsTotal();
     var prescriptionGoals = metGoalTemplate({ category: category.name });
-    if (diff < -0.05) {
+    if (isNaN(diff) || diff < -0.05) {
         prescriptionGoals = unmetGoalTemplate({ category: category.name });
     } else if (diff > 0.05) {
         prescriptionGoals = overBudgetTemplate({ category: category.name });
@@ -95,7 +95,9 @@ var buildPrescription = function(category, goals, totalGoalsTime) {
     $(prescriptionId).html('');
     $(prescriptionId).append('<div><p><b>Goals:</b> '
         + prescriptionGoals + '</p></div>');
-    $(prescriptionId).append(readingDiversity(category.name, category));
+    if (!isNaN(diff) && category.time > 0) {
+        $(prescriptionId).append(readingDiversity(category.name, category));
+    }
     var readingLevelAverage = category.readingLevelAverage();
     if (isNaN(readingLevelAverage)) {
         $(prescriptionId).append('<div><p><b>Reading Level:</b> No data collected so far. Try viewing more sites.</p></div>');

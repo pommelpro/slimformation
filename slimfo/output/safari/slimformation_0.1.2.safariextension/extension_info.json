@@ -9,7 +9,7 @@
     "main.js"
   ], 
   "homepage_url": "http://knightlab.northwestern.edu", 
-  "version": "0.1.1", 
+  "version": "0.1.2", 
   "debug": true, 
   "id": "com.kangoextensions.popupdemo", 
   "browser_button": {
