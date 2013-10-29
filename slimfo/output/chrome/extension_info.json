@@ -9,7 +9,7 @@
     "main.js"
   ], 
   "homepage_url": "http://knightlab.northwestern.edu", 
-  "version": "0.1.2", 
+  "version": "0.1.3", 
   "debug": true, 
   "id": "{d04473cf-d3a0-11e0-9b3e-14d64d08fdac}", 
   "browser_button": {
@@ -17,8 +17,8 @@
     "icon": "images/icons/16.png", 
     "popup": {
       "url": "popup.html", 
-      "width": 600, 
-      "height": 520
+      "width": 400, 
+      "height": 500
     }, 
     "tooltipText": "Slimformation"
   }

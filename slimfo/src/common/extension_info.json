@@ -1,6 +1,6 @@
 {
     "name": "Slimformation",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Slimformation",
     "creator": "Knight Lab",
     "homepage_url": "http://knightlab.northwestern.edu",
@@ -11,8 +11,8 @@
         "icon": "images/icons/16.png",
         "popup": {
             "url": "popup.html",
-            "width": 600,
-            "height": 520
+            "width": 400,
+            "height": 500
         }
     },
     "debug": true
