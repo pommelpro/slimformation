@@ -1,7 +1,7 @@
 <?xml version="1.0" ?><widget id="http://kangoextensions.com/extensions/popupdemo" version="0.1.3" xmlns="http://www.w3.org/ns/widgets">
 	<name>Slimformation</name>
 	<description>Slimformation</description>
-	<author href="http://knightlab.northwestern.edu">Knight Lab</author>
+	<author href="http://slimformation.knightlab.com">Knight Lab</author>
 	<update-description href=""/>
 	<icon src="icons/icon100.png"/>
 	<content src="background.html"/>

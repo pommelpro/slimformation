@@ -4,11 +4,11 @@
   "creator": "Knight Lab", 
   "description": "Slimformation", 
   "background_scripts": [
-    "lib/js/underscore-min.js", 
+    "lib/js/lowline.min.js", 
     "readingScore.js", 
     "main.js"
   ], 
-  "homepage_url": "http://knightlab.northwestern.edu", 
+  "homepage_url": "http://slimformation.knightlab.com", 
   "version": "0.1.3", 
   "debug": true, 
   "id": "com.kangoextensions.popupdemo", 
