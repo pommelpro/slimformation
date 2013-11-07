@@ -50,5 +50,6 @@ var categoryData = function() {
         }
         category.domains[domain] += elem['totalTime'];
     });
+    _categories = categories;
     return categories;
 };
