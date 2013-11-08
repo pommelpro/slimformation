@@ -3,10 +3,27 @@ kango.ui.browserButton.setPopup({url:'popup.html', width: 420, height:520})
 var currentURL = null;
 var currentURLStartTime = null;
 var URLMeta = kango.storage.getItem('URL_meta');
+
+var cleanURLMeta = function() {
+    var newMeta = {};
+    for (var key in URLMeta) {
+       if (!ignore(key)) {
+           console.log("keeping: " + key);
+           newMeta[key] = URLMeta[key];
+       } else {
+           console.log("ignoring: " + key);
+       }
+    }
+    kango.storage.setItem('URL_meta', newMeta);
+};
+
 if (URLMeta == null) {
     URLMeta = {};
     kango.storage.setItem('URL_meta', URLMeta);
+} else {
+    cleanURLMeta();
 }
+
 
 var fetchUrlInfo = function(url) {
     //serviceURL = 'http://calm-thicket-4369.herokuapp.com/categorize.json';
@@ -42,9 +59,10 @@ var fetchUrlInfo = function(url) {
     });
 }
 
+
 var newURL = function(event, url) {
     var time = new Date();
-    if (currentURL != null && currentURL.indexOf('http') == 0) {
+    if (currentURL != null && !ignore(currentURL)) {
         var delta = time - currentURLStartTime;
         console.log('' + delta + ': ' + currentURL);
         var meta = URLMeta[currentURL];
@@ -60,7 +78,7 @@ var newURL = function(event, url) {
     } else if (url != null) {
         currentURL = url;
     }
-    if (currentURL.indexOf('http') == 0) {
+    if (!ignore(currentURL)) {
       if (URLMeta[currentURL] == null) {
         fetchUrlInfo(currentURL); 
       }

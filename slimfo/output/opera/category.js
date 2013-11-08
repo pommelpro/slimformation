@@ -39,12 +39,12 @@ var categoryData = function() {
         kango.storage.setItem('URL_meta', meta);
     }
     $.each(meta, function(i, elem){
+        var domain = getDomain(i);
         var category = categories[CATEGORY_MAP[elem['category']]];
         category.time += elem['totalTime'];
         category.readingScoreTotal += elem['readingScore'];
         category.urlCount += 1;
         category.urls[i] = elem['totalTime'];
-        var domain = getDomain(i);
         if (category.domains[domain] == null) {
             category.domains[domain] = 0; 
         }

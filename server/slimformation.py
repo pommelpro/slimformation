@@ -12,7 +12,7 @@ import re
 import urllib, urllib2
 from urlparse import urlparse
 
-CWD = os.path.realpath(__file__)
+CWD = os.path.dirname(os.path.realpath(__file__))
 
 CATEGORY_URL = 'http://access.alchemyapi.com/calls/url/URLGetCategory'
 TEXT_URL = 'http://access.alchemyapi.com/calls/url/URLGetText'
@@ -20,6 +20,8 @@ WORDS_PAT = re.compile('\w+')
 VOWELS_PAT = re.compile('[aeiouy]{1,2}')
 SENTENCE_END_PAT = re.compile(
     '(\. |\." |\.$|\."$|\? |\?" |\?$|\?"$|! |!" |!$|!"$)')
+IGNORED_DOMAINS = \
+    json.dumps(open(os.path.join(CWD, 'ignore_domains.txt')).read().split('\n'))
 
 # Set default FLASK_SETTINGS_MODULE for debug mode
 if __name__ == "__main__":
@@ -27,6 +29,8 @@ if __name__ == "__main__":
         os.environ['FLASK_SETTINGS_MODULE'] = 'core.settings.loc'
 
 app = Flask(__name__)
+
+
 
 # Import settings module for the inject_static_url context processor.
 settings_module = os.environ.get('FLASK_SETTINGS_MODULE')
@@ -54,23 +58,6 @@ def inject_static_url():
     if not static_url.endswith('/'):
         static_url += '/'
     return dict(static_url=static_url)
-
-    
-#@app.route("/", methods=['GET', 'POST'])
-#@app.route("/<name>/", methods=['GET', 'POST'])
-#def index(name=''):
-#    """Sample route."""
-#    error = ''
-#    
-#    try:
-#        if not name:
-#            name = 'World'
-#    except Exception, e:
-#        error = str(e)
-#        traceback.print_exc() 
-#    finally:        
-#        return render_template('index.html', error=error, name=name)
-#    
 
 
 def get_category_info(url):
@@ -154,6 +141,10 @@ def categorize():
         #readingScore="%.2f"%flesch_kincaid(text)
         readingScore=flesch_kincaid(text)
     )
+
+@app.route('/ignore-domains')
+def ignore_domains():
+    return IGNORED_DOMAINS
 
         
 if __name__ == "__main__":

@@ -4,7 +4,7 @@
     "description": "Slimformation",
     "creator": "Knight Lab",
     "homepage_url": "http://slimformation.knightlab.com",
-    "background_scripts": ["lib/js/lowline.min.js", "readingScore.js", "main.js"],
+    "background_scripts": ["main_utils.js", "lib/js/lowline.min.js", "readingScore.js", "main.js"],
     "browser_button": {
         "tooltipText": "Slimformation",
         "caption": "Slimformation",

@@ -4,6 +4,7 @@
   "creator": "Knight Lab", 
   "description": "Slimformation", 
   "background_scripts": [
+    "main_utils.js", 
     "lib/js/lowline.min.js", 
     "readingScore.js", 
     "main.js"
