@@ -45,7 +45,9 @@ var fetchUrlInfo = function(url) {
 }
 
 
-var newURL = function(event, url) {
+var newURL = function(event) {
+    var url = event.url;
+    console.log('NEW URL: ' + url);
     var time = new Date();
     IGNORED_DOMAINS = _retrieveIgnoredDomains(); // refresh in case of changes
                                                  // via UI
@@ -109,4 +111,4 @@ var updateURL = function() {
 // updateURL every 10 seconds -- in case the user has multiple browser
 // instances open, since there does not seem to be an event we can bind to
 // for switching between browser instances
-setInterval(updateURL, 10000);
+//setInterval(updateURL, 10000);

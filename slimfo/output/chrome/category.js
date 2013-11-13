@@ -27,10 +27,9 @@ var categoryData = function() {
     categories = {
         Other: new Category('Other'),
         Politics: new Category('Politics'),
-        Science: new Category('Science'),
+        SciTech: new Category('SciTech'),
         Business: new Category('Business'),
-        Entertainment: new Category('Entertainment'),
-        Technology: new Category('Technology'),
+        Culture: new Category('Culture'),
         Sports: new Category('Sports')
     };
     var meta = kango.storage.getItem('URL_meta');
