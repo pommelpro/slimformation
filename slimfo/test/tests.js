@@ -66,6 +66,22 @@ test( "updateSliderValue test", function() {
   ok( updateSliderValue(_event, _goals), "readingDiversity");
 });
 
+test( "setIgnoreDomain test", function() {
+  var origIgnoredDomains = _retrieveIgnoredDomains();
+  _storeIgnoredDomains = function(){};
+  IGNORED_DOMAINS = [ 'foo' ]
+  setIgnoreDomain('bar');
+  deepEqual(IGNORED_DOMAINS, ["foo","bar"], "add ignored domain, true default");
+  setIgnoreDomain('bat', true);
+  deepEqual(IGNORED_DOMAINS, ["foo","bar","bat"], "add ignored explicit");
+  setIgnoreDomain('bar', false);
+  deepEqual(IGNORED_DOMAINS, ["foo","bat"], "remove ignored domain");
+
+  console.log(_retrieveIgnoredDomains());
+  deepEqual(origIgnoredDomains, _retrieveIgnoredDomains(),
+        "Check local storage is not affected");
+});
+
 /* category.js */
 
 test( "categoryData test", function() {
@@ -81,5 +97,14 @@ test( "categoryData test", function() {
     "Sports"
   ];
   deepEqual( _.keys(_data), _expect, "unititialized category keys");
+});
+
+/* common.js */
+
+test( "ignore test", function() {
+  IGNORED_DOMAINS = [ 'foo1.com', 'foo2.com' ]
+  ok(ignore("http://foo1.com"), "ignore blacklisted domain");
+  ok(ignore("http://bar.foo1.com"), "ignore blacklisted subdomain");
+  ok(!ignore("http://foo3.com"), "don't ignore unlisted domain");
 });
 

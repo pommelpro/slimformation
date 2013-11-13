@@ -83,6 +83,15 @@ KangoAPI.onReady(function() {
     var divId = category + '-prescription';
     $('#' + divId).show()
   });
+
+  $('.ignore-domain').click(function(e) {
+    var target = $(e.target);
+    var domain = target.data('domain');
+    setIgnoreDomain(domain);
+    cleanURLMeta();
+    reloadCategories();
+    target.closest('tr').remove(); 
+  });
 });
 
 

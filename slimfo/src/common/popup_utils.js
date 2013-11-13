@@ -1,4 +1,22 @@
-﻿var pieChartData = function() {
+﻿var setIgnoreDomain = function(domain, ignore) {
+    if (ignore === undefined) {
+        ignore = true;
+    }
+    if (ignore) {
+        if (IGNORED_DOMAINS.indexOf(domain) < 0) {
+            IGNORED_DOMAINS.push(domain);
+            _storeIgnoredDomains();
+        }
+    } else {
+        var idx = IGNORED_DOMAINS.indexOf(domain);
+        if (idx >= 0) {
+            IGNORED_DOMAINS.splice(idx, 1);
+            _storeIgnoredDomains();
+        }
+    }
+};
+
+var pieChartData = function() {
     var data = [];
     var categories = categoryData();
     var totalTime = 0;
@@ -36,7 +54,7 @@ var buildActivityTable = function() {
       var category = categoryData()[cat];
       $('table#cat-source-table tbody').append(
         '<tr style="background-color:#f9f9f9"><td><b>'
-        + category.name + '</b></td><td></td></tr>');
+        + category.name + '</b></td><td></td><td></tr></tr>');
       var top1 = [null, 0];
       var top2 = [null, 0];
       var top3 = [null, 0];
@@ -54,21 +72,21 @@ var buildActivityTable = function() {
       });
       if (top1[0] !== null) {
         $('table#cat-source-table tbody').append(
-          '<tr><td>' + top1[0] + '</td><td>'
+          '<tr><td>' + top1[0] + '</td><td><span title="ignore ' + top1[0] + '" class="glyphicon glyphicon-ban-circle ignore-domain" data-domain="' + top1[0] + '"></span></td><td>'
            + formatTime(top1[1]) + '</td></tr>');
       }
       if (top2[0] !== null) {
         $('table#cat-source-table tbody').append(
-          '<tr><td>' + top2[0] + '</td><td>'
+          '<tr><td>' + top2[0] + '</td><td><span title="ignore ' + top2[0] + '" class="glyphicon glyphicon-ban-circle ignore-domain" data-domain="' + top2[0] + '"></span></td><td>'
           + formatTime(top2[1]) + '</td></tr>');
       }
       if (top3[0] !== null) {
         $('table#cat-source-table tbody').append(
-          '<tr><td>' + top3[0] + '</td><td>'
+          '<tr><td>' + top3[0] + '</td><td><span title="ignore ' + top3[0] + '" class="glyphicon glyphicon-ban-circle ignore-domain" data-domain="' + top3[0] + '"></span></td><td>'
           + formatTime(top3[1]) + '</td></tr>');
       }
       $('table#cat-source-table tbody').append(
-        '<tr><td></td><td></td></tr>');
+        '<tr><td></td><td></td><td></td></tr>');
   });
 }; // buildActivityTable
 
@@ -182,7 +200,6 @@ var buildGoalsOverview = function(categories, goals) {
 };
 
 var updateSliderValue = function(event, goals) {
-  /* TODO: update goals overview */
   var cat = $(event.currentTarget).attr('data-slider-category');
   goals.setCategoryGoal(cat, event.value);
   buildOverallDistribution(goals);

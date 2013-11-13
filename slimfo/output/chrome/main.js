@@ -2,20 +2,6 @@ kango.ui.browserButton.setPopup({url:'popup.html', width: 420, height:520})
 
 var currentURL = null;
 var currentURLStartTime = null;
-var URLMeta = kango.storage.getItem('URL_meta');
-
-var cleanURLMeta = function() {
-    var newMeta = {};
-    for (var key in URLMeta) {
-       if (!ignore(key)) {
-           console.log("keeping: " + key);
-           newMeta[key] = URLMeta[key];
-       } else {
-           console.log("ignoring: " + key);
-       }
-    }
-    kango.storage.setItem('URL_meta', newMeta);
-};
 
 if (URLMeta == null) {
     URLMeta = {};
@@ -23,7 +9,6 @@ if (URLMeta == null) {
 } else {
     cleanURLMeta();
 }
-
 
 var fetchUrlInfo = function(url) {
     //serviceURL = 'http://calm-thicket-4369.herokuapp.com/categorize.json';
@@ -62,9 +47,10 @@ var fetchUrlInfo = function(url) {
 
 var newURL = function(event, url) {
     var time = new Date();
-    if (currentURL != null && !ignore(currentURL)) {
+    IGNORED_DOMAINS = _retrieveIgnoredDomains(); // refresh in case of changes
+                                                 // via UI
+    if (currentURL !== null && !ignore(currentURL)) {
         var delta = time - currentURLStartTime;
-        console.log('' + delta + ': ' + currentURL);
         var meta = URLMeta[currentURL];
         if (meta != null) {
             meta['totalTime'] = meta['totalTime'] + delta;
@@ -78,8 +64,8 @@ var newURL = function(event, url) {
     } else if (url != null) {
         currentURL = url;
     }
-    if (!ignore(currentURL)) {
-      if (URLMeta[currentURL] == null) {
+    if (currentURL !== null && !ignore(currentURL)) {
+      if (!URLMeta[currentURL]) {
         fetchUrlInfo(currentURL); 
       }
     }
@@ -91,27 +77,29 @@ kango.browser.addEventListener(kango.browser.event.TAB_CHANGED, newURL);
 kango.browser.addEventListener(kango.browser.event.DOCUMENT_COMPLETE, newURL);
 
 var updateURL = function() {
-  console.log(document.visibilityState);
-  if (document.webkitHidden) {
-      console.log('hidden');
-  }
   var name = kango.browser.getName();
   if (name == 'chrome') {
-    chrome.tabs.query({
-      active: true,
-      lastFocusedWindow: true
-    }, function(array_of_Tabs) {
-      var tab = array_of_Tabs[0];
-      var url = tab.url;
-      if (url != currentURL) {
-         newURL(null, url);
-      }
-    });
+    var tabs = chrome.tabs;
+    if (tabs) {
+      tabs.query({
+        active: true,
+        lastFocusedWindow: true
+        }, function(array_of_Tabs) {
+        if (array_of_Tabs) {
+            var tab = array_of_Tabs[0];
+            if (tab) {
+                var url = tab.url;
+                if (url != currentURL) {
+                    newURL(null, url);
+                }
+            }
+        }
+      });
+    } // if tabs
   } else if (name == 'firefox') {
     var currentWindow = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator).getMostRecentWindow("navigator:browser");
     var currBrowser = currentWindow.getBrowser();
     var currURL = currBrowser.currentURI.spec;
-    console.log(currURL);
     if (currURL != currentURL) {
         newURL(null, currURL);
     }
