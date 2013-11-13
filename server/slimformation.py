@@ -126,7 +126,7 @@ def main():
 
 @app.route('/categorize')
 def categorize():
-    url = request.args['url']
+    url = request.args['url'].encode('utf-8')
     category_data = get_category_info(url)
     #if category_data['status'] == 'OK' and category_data['score'] > 0:
     if category_data['status'] == 'OK':
