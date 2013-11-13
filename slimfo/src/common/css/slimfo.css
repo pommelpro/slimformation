@@ -208,10 +208,24 @@ div.Science-distribution {
   background: #E74C3C;
 }
 
+#SciTech-slider .slider-selection,
+div#SciTech-budget .actual-bar,
+div#SciTech-budget .projected-bar,
+div.SciTech-distribution {
+  background: #E74C3C;
+}
+
 #Entertainment-slider .slider-selection,
 div#Entertainment-budget .actual-bar,
 div#Entertainment-budget .projected-bar,
 div.Entertainment-distribution {
+  background: #F1C40F;
+}
+
+#Culture-slider .slider-selection,
+div#Culture-budget .actual-bar,
+div#Culture-budget .projected-bar,
+div.Culture-distribution {
   background: #F1C40F;
 }
 

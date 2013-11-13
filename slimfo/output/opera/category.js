@@ -41,6 +41,15 @@ var categoryData = function() {
     $.each(meta, function(i, elem){
         var domain = getDomain(i);
         var category = categories[CATEGORY_MAP[elem['category']]];
+        if (category === undefined) {
+            category = {
+                time: 0,
+                readingScoreTotal: 0,
+                urlCount: 0,
+                urls: {},
+                domains: {} 
+            };
+        }
         category.time += elem['totalTime'];
         category.readingScoreTotal += elem['readingScore'];
         category.urlCount += 1;

@@ -1,10 +1,18 @@
-var DEFAULT_GOALS = {
+var _DEFAULT_GOALS = {
   'Science': 16,
   'Sports': 16,
   'Technology': 16,
   'Business': 16,
   'Entertainment': 16,
   'Politics': 16
+};
+
+var DEFAULT_GOALS = {
+  'SciTech': 20,
+  'Sports': 20,
+  'Business': 20,
+  'Culture': 20,
+  'Politics': 20
 };
 
 var READING_LEVELS = {
@@ -25,7 +33,7 @@ var READING_LEVELS = {
   }
 }
 
-var CATEGORY_MAP = {
+var ALCHEMY_CATEGORY_MAP = {
     'undefined': 'Other',
     'unknown': 'Other',
     'computer_internet': 'Technology',
@@ -45,19 +53,21 @@ var CATEGORY_MAP = {
     'technology': 'Technology' 
 };
 
-/* these are now in CSS
-var CATEGORY_COLORS = {
-    'Other': '#e377c2',
-    'Technology': '#E67E22',
-    'Entertainment': '#F1C40F',
-    'Science': '#E74C3C',
-    'Business': '#9B59B6',
-    'Politics': '#3498DB',
-    'Sports': '#2ECC71'
+CATEGORY_MAP = {
+    'politics': 'Politics',
+    'business': 'Business',
+    'sports': 'Sports',
+    'entertainment': 'Culture',
+    'science-technology': 'SciTech',
+    'education': 'Culture',
+    'healthy-living': 'Culture',
+    'arts': 'Culture',
+    'religion': 'Culture',
+    'food': 'Culture',
+    'other': 'Other'
 }
-*/
 
-var CATEGORY_NAMES = [
+var _CATEGORY_NAMES = [
   'Politics',
   'Business',
   'Technology',
@@ -67,13 +77,31 @@ var CATEGORY_NAMES = [
   'Other'
 ]
 
-var PIE_CHART_COLORS = [
+var CATEGORY_NAMES = [
+  'Politics',
+  'Business',
+  'SciTech',
+  'Sports',
+  'Culture',
+  'Other'
+]
+
+var _PIE_CHART_COLORS = [
   '#3498DB', // Politics
   '#9B59B6', // Business
   '#E67E22', // Technology
   '#2ECC71', // Sports
   '#E74C3C', // Science
   '#F1C40F', // Entertainment
+  '#e377c2'  // Other
+];
+
+var PIE_CHART_COLORS = [
+  '#3498DB', // Politics
+  '#9B59B6', // Business
+  '#E74C3C', // SciTech
+  '#2ECC71', // Sports
+  '#F1C40F', // Culture
   '#e377c2'  // Other
 ];
 

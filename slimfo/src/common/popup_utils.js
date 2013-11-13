@@ -21,10 +21,15 @@ var pieChartData = function() {
     var categories = categoryData();
     var totalTime = 0;
     $.each(CATEGORY_NAMES, function(i, name) {
-      totalTime += categories[name]['time'];
+      if (categories[name]) {
+        totalTime += categories[name]['time'];
+      }
     });
     $.each(CATEGORY_NAMES, function(i, name) {
         var cat = categories[name];
+        if (cat === undefined) {
+            cat = { time: 0 }
+        }
         if (totalTime == 0) {
           data[data.length] = { key:name, y:(1/6) * 100 };
         } else {
@@ -52,6 +57,16 @@ var formatTime = function(ms) {
 var buildActivityTable = function() {
   $.each(CATEGORY_NAMES, function(i, cat) {
       var category = categoryData()[cat];
+      if (category === undefined) {
+        category = {
+            name: cat,
+            domains: {}
+        };
+      }
+      var name = category.name;
+      if (name == 'SciTech') {
+        name = 'Science & Technology';
+      }
       $('table#cat-source-table tbody').append(
         '<tr style="background-color:#f9f9f9"><td><b>'
         + category.name + '</b></td><td></td><td></tr></tr>');
@@ -184,12 +199,24 @@ var buildGoalsOverview = function(categories, goals) {
   $.each(CATEGORY_NAMES, function(i, name) {
     if (name === 'Other') { return true; } // continue
     var cat = categoryData()[name];
+    if (cat === undefined) {
+        cat = {
+            time: 0
+        };
+    }
     totalTime += cat['time'];
   });
   $('#reading-budgets').html('');
   $.each(CATEGORY_NAMES, function(i, name) {
     if (name === 'Other') { return true; } // continue
     var cat = categoryData()[name];
+    if (cat === undefined) {
+        cat = {
+            name: name,
+            time: 0,
+            readingLevelAverage: function() { return 0; } 
+        };
+    }
     $('#reading-budgets').append(readingBudgetTemplate({
       category: name,
       actualTime:cat['time']/totalTime*100,
