@@ -53,3 +53,8 @@ var categoryData = function() {
     _categories = categories;
     return categories;
 };
+
+var reloadCategories = function() {
+    _categories = null;
+    return categoryData();
+}; 

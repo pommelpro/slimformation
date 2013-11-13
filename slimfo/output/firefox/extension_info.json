@@ -5,6 +5,7 @@
   "description": "Slimformation", 
   "package_id": "kango-27f94ab5-72d6-31f7-8bad-b27e8b2bf4d0", 
   "background_scripts": [
+    "common.js", 
     "main_utils.js", 
     "lib/js/lowline.min.js", 
     "readingScore.js", 
