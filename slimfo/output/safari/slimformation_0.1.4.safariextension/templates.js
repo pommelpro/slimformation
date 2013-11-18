@@ -51,15 +51,15 @@ var biasedTemplate = _.template(
     + " from <%= domains %>. Try some other sources!");
 
 var metGoalTemplate = _.template(
-    'Congrats! You met your goal for <%= category %>');
+    'Congrats! You met your goal for <%= category %>.');
 
 var unmetGoalTemplate = _.template(
     "You didn't meet your goal for <%= category %>. Try to focus on "
-    + " reading more about <%= category %>");
+    + " reading more about <%= category %>.");
 
 var overBudgetTemplate = _.template(
     'Oops! You went over your budget for <%= category %>. Try cutting '
-    + 'back on <%= category %>');
+    + 'back on <%= category %> reading.');
 
 var fleschKincaidTemplate = _.template(
-    'Weighted Average Flesch-Kincaid score for <%= category %> is <%= readingLevel %>');
+    'Weighted Average Flesch-Kincaid score for <%= category %> is <%= readingLevel %>.');

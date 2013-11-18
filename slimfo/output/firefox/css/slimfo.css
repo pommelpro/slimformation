@@ -310,3 +310,11 @@ div.Culture-distribution {
   background-color: #080808 \9;
 }
 
+.settings-icon {
+  margin: 10px 10px;
+  color: white;
+}
+.settings-icon:hover {
+    color: #dddddd;
+}
+

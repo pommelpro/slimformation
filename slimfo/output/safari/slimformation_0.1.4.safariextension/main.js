@@ -45,9 +45,7 @@ var fetchUrlInfo = function(url) {
 }
 
 
-var newURL = function(event) {
-    var url = event.url;
-    console.log('NEW URL: ' + url);
+var newURL = function(event, url) {
     var time = new Date();
     IGNORED_DOMAINS = _retrieveIgnoredDomains(); // refresh in case of changes
                                                  // via UI
@@ -66,6 +64,7 @@ var newURL = function(event) {
     } else if (url != null) {
         currentURL = url;
     }
+    console.log('new url: ' + currentURL);
     if (currentURL !== null && !ignore(currentURL)) {
       if (!URLMeta[currentURL]) {
         fetchUrlInfo(currentURL); 
@@ -86,8 +85,8 @@ var updateURL = function() {
       tabs.query({
         active: true,
         lastFocusedWindow: true
-        }, function(array_of_Tabs) {
-        if (array_of_Tabs) {
+      }, function(array_of_Tabs) {
+          if (array_of_Tabs.length > 0) {
             var tab = array_of_Tabs[0];
             if (tab) {
                 var url = tab.url;
@@ -95,7 +94,7 @@ var updateURL = function() {
                     newURL(null, url);
                 }
             }
-        }
+          }
       });
     } // if tabs
   } else if (name == 'firefox') {
@@ -103,7 +102,7 @@ var updateURL = function() {
     var currBrowser = currentWindow.getBrowser();
     var currURL = currBrowser.currentURI.spec;
     if (currURL != currentURL) {
-        newURL(null, currURL);
+        newURL(null, url);
     }
   }
 };
@@ -111,4 +110,4 @@ var updateURL = function() {
 // updateURL every 10 seconds -- in case the user has multiple browser
 // instances open, since there does not seem to be an event we can bind to
 // for switching between browser instances
-//setInterval(updateURL, 10000);
+setInterval(updateURL, 10000);

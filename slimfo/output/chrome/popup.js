@@ -92,6 +92,18 @@ KangoAPI.onReady(function() {
     reloadCategories();
     target.closest('tr').remove(); 
   });
+
+  $('.settings-icon').click(function() {
+    console.log('settings');
+    $('ul.nav li').removeClass('active');
+    $('.content-pane').hide({
+      duration: TRANSITION_DURATION
+    });
+    $('#settings').show({
+      duration: 0
+    });
+    showSettings();
+  });
 });
 
 

@@ -115,11 +115,13 @@ var readingDiversity = function(category, categoryData) {
     }
   });
   var domainDiversity = null;
+  var name = category;
+  if (name == 'SciTech') { name = 'Science & Technology'; }
   if (biasedDomains.length > 0) {
     domainDiversity = biasedTemplate({
-      category: category, domains: biasedDomains.join(', ') });
+      category: name, domains: biasedDomains.join(', ') });
   } else {
-    domainDiversity = diverseTemplate({ category: category });
+    domainDiversity = diverseTemplate({ category: name });
   }
   return '<div><p><b>Diversity:</b> ' + domainDiversity + '</p></div>';
 }; // readingDiversity
@@ -128,15 +130,17 @@ var buildPrescription = function(category, goals, totalGoalsTime) {
     var diff = category.time/totalGoalsTime -
         goals.categoryGoal(category.name)/goals.goalsTotal();
     var prescriptionGoals = null;
+    var name = category.name;
+    if (name == 'SciTech') { name = 'Science & Technology'; }
     if (goals.categoryGoal(category.name) == 0) {
-        prescriptionGoals = "<p>Your goal for " + category.name
+        prescriptionGoals = "<p>Your goal for " + name
             + " is currently set to zero.</p>";
     } else {
-        prescriptionGoals = metGoalTemplate({ category: category.name });
+        prescriptionGoals = metGoalTemplate({ category: name });
         if (isNaN(diff) || diff < -0.05) {
-            prescriptionGoals = unmetGoalTemplate({ category: category.name });
+            prescriptionGoals = unmetGoalTemplate({ category: name });
         } else if (diff > 0.05) {
-            prescriptionGoals = overBudgetTemplate({ category: category.name });
+            prescriptionGoals = overBudgetTemplate({ category: name });
         } 
     }
     var prescriptionId = '#' + category.name + '-prescription';
@@ -148,11 +152,15 @@ var buildPrescription = function(category, goals, totalGoalsTime) {
         $(prescriptionId).append(readingDiversity(category.name, category));
       }
       var readingLevelAverage = category.readingLevelAverage();
+      var name = category.name;
+      if (name == 'SciTech') {
+        name = 'Science & Technology';
+      }
       if (isNaN(readingLevelAverage)) {
         $(prescriptionId).append('<div><p><b>Reading Level:</b> No data collected so far. Try viewing more sites.</p></div>');
       } else {
         var readingLevelPrescription = fleschKincaidTemplate({
-            category: category.name,
+            category: name,
             readingLevel: readingLevelAverage
         });
         if (readingLevelAverage >= READING_LEVELS[1]['threshold']) {
@@ -246,3 +254,22 @@ var initGoals = function() {
   });
 }; // initGoals
 
+var showIgnoredDomains = function() {
+    var table = $('table#ignored-domains-table');
+    table.html('');
+    $.each(IGNORED_DOMAINS, function(i, d) {
+        table.append('<tr><td><span title="Stop ignoring" class="glyphicon glyphicon-ok-circle remove-ignored-domain"></span><td>' + d + '</td></tr>');
+    });
+};
+
+var showSettings = function() {
+    showIgnoredDomains();
+};
+
+$('table#ignored-domains-table').on('click', '.remove-ignored-domain',
+        function(evt) {
+    var el = $(this);
+    var domain = el.closest('td').next().html();
+    setIgnoreDomain(domain, false);
+    el.closest('tr').remove();
+});

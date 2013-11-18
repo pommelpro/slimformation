@@ -90,10 +90,9 @@ test( "categoryData test", function() {
   _expect = [
     "Other",
     "Politics",
-    "Science",
+    "SciTech",
     "Business",
-    "Entertainment",
-    "Technology",
+    "Culture",
     "Sports"
   ];
   deepEqual( _.keys(_data), _expect, "unititialized category keys");
