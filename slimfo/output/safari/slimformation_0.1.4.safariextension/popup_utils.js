@@ -256,7 +256,9 @@ var initGoals = function() {
 
 var showIgnoredDomains = function() {
     var table = $('table#ignored-domains-table');
-    table.html('');
+    if (IGNORED_DOMAINS.length > 0) {
+        table.html('');
+    }
     $.each(IGNORED_DOMAINS, function(i, d) {
         table.append('<tr><td><span title="Stop ignoring" class="glyphicon glyphicon-ok-circle remove-ignored-domain"></span><td>' + d + '</td></tr>');
     });

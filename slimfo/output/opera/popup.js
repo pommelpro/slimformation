@@ -10,7 +10,7 @@ KangoAPI.onReady(function() {
     KangoAPI.closeWindow()
   });
 
-  $('#activity-nav').click(function() {
+  $('#activity-nav,#activity-link').click(function() {
     $('ul.nav li').removeClass('active');
     $(this).addClass('active');
     $('.content-pane').hide({
