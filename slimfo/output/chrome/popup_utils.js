@@ -87,17 +87,17 @@ var buildActivityTable = function() {
       });
       if (top1[0] !== null) {
         $('table#cat-source-table tbody').append(
-          '<tr><td>' + top1[0] + '</td><td><span title="ignore ' + top1[0] + '" class="glyphicon glyphicon-ban-circle ignore-domain" data-domain="' + top1[0] + '"></span></td><td>'
+          '<tr><td>' + top1[0] + '</td><td><span alt="ignore ' + top1[0] + '" title="ignore ' + top1[0] + '" data-domain="' + top1[0] + '" class="glyphicon glyphicon-ban-circle ignore-domain"></span></td><td>'
            + formatTime(top1[1]) + '</td></tr>');
       }
       if (top2[0] !== null) {
         $('table#cat-source-table tbody').append(
-          '<tr><td>' + top2[0] + '</td><td><span title="ignore ' + top2[0] + '" class="glyphicon glyphicon-ban-circle ignore-domain" data-domain="' + top2[0] + '"></span></td><td>'
+          '<tr><td>' + top2[0] + '</td><td><span alt="ignore ' + top2[0] + '" title="ignore ' + top2[0] + '" class="glyphicon glyphicon-ban-circle ignore-domain" data-domain="' + top2[0] + '"></span></td><td>'
           + formatTime(top2[1]) + '</td></tr>');
       }
       if (top3[0] !== null) {
         $('table#cat-source-table tbody').append(
-          '<tr><td>' + top3[0] + '</td><td><span title="ignore ' + top3[0] + '" class="glyphicon glyphicon-ban-circle ignore-domain" data-domain="' + top3[0] + '"></span></td><td>'
+          '<tr><td>' + top3[0] + '</td><td><span alt="ignore ' + top3[0] + '" title="ignore ' + top3[0] + '" class="glyphicon glyphicon-ban-circle ignore-domain" data-domain="' + top3[0] + '"></span></td><td>'
           + formatTime(top3[1]) + '</td></tr>');
       }
       $('table#cat-source-table tbody').append(
@@ -260,7 +260,7 @@ var showIgnoredDomains = function() {
         table.html('');
     }
     $.each(IGNORED_DOMAINS, function(i, d) {
-        table.append('<tr><td><span title="Stop ignoring" class="glyphicon glyphicon-ok-circle remove-ignored-domain"></span><td>' + d + '</td></tr>');
+        table.append('<tr><td><span alt="Stop ignoring" title="Stop ignoring" class="glyphicon glyphicon-ok-circle remove-ignored-domain"></span><td>' + d + '</td></tr>');
     });
 };
 

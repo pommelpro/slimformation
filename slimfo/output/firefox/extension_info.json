@@ -12,7 +12,7 @@
     "main.js"
   ], 
   "homepage_url": "http://slimformation.knightlab.com", 
-  "version": "0.1.4", 
+  "version": "0.1.41", 
   "debug": true, 
   "id": "{27f94ab5-72d6-31f7-8bad-b27e8b2bf4d0}", 
   "browser_button": {
