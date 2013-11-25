@@ -87,7 +87,7 @@ test( "setIgnoreDomain test", function() {
 test( "categoryData test", function() {
   ok( categoryData(), "categoryData");
   _data = categoryData();
-  _expect = [
+  var _expect = [
     "Other",
     "Politics",
     "SciTech",
@@ -107,3 +107,20 @@ test( "ignore test", function() {
   ok(!ignore("http://foo3.com"), "don't ignore unlisted domain");
 });
 
+test( "cleanDailyTimes test", function() {
+  var data = { foo: "bar" };
+  deepEqual(cleanDailyTimes(data, 30), data, "missing dailyTimes");
+  d1 = dateFormat(new Date("October 1, 2013"));
+  d2 = dateFormat(new Date("November 1, 2013"));
+  d3 = dateFormat(new Date("December 1, 2013"));
+  dt = new Date("November 22, 2013");
+  var dailyTimes = {};
+  dailyTimes[d1] = 0;
+  dailyTimes[d2] = 0;
+  dailyTimes[d3] = 0;
+  data = { dailyTimes: dailyTimes};
+  var _expect = { dailyTimes: $.extend({},data['dailyTimes']) }; 
+  delete _expect['dailyTimes'][d1];
+  console.log(_expect);
+  deepEqual(cleanDailyTimes(data, 30, dt), _expect, "remove old data");
+});

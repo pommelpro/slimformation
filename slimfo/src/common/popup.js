@@ -103,6 +103,35 @@ KangoAPI.onReady(function() {
       duration: 0
     });
     showSettings();
+    $('#num-reporting-days').html(numReportingDays);
+  });
+
+  $('.edit-num-reporting-days').click(function() {
+    $('#num-reporting-days').attr('contenteditable', true).focus();
+  });
+
+
+  /* http://stackoverflow.com/a/6263537 */
+  $('body').on('focus', '[contenteditable]', function() {
+      var $this = $(this);
+      $this.data('before', $this.html());
+      return $this;
+  }).on('blur', '[contenteditable]', function() {
+      var $this = $(this);
+      if ($this.data('before') !== $this.html()) {
+          $this.data('before', $this.html());
+          $this.trigger('change');
+      }
+      return $this;
+  });
+
+  $('#num-reporting-days').change(function(evt) {
+    var num = parseInt($('#num-reporting-days').html());
+    if (num == NaN) {
+        return;
+    }
+    setReportingDays(num);
+    $('#num-reporting-days').attr('contenteditable', false);
   });
 });
 

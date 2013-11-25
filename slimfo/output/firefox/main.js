@@ -30,7 +30,8 @@ var fetchUrlInfo = function(url) {
                 domain: info['domain'],
                 url: info['url'],
                 readingScore: info['readingScore'],
-                totalTime: 0
+                totalTime: 0,
+                dailyTimes: {}
             };
             if (URLMeta[url] != null) {
                 meta['totalTime'] = URLMeta[url]['totalTime'];
@@ -54,6 +55,14 @@ var newURL = function(event, url) {
         var meta = URLMeta[currentURL];
         if (meta != null) {
             meta['totalTime'] = meta['totalTime'] + delta;
+            var dt = dateFormat(new Date());
+            if (meta['dailyTimes'] === undefined) {
+                meta['dailyTimes'] = {};
+            }
+            if (meta['dailyTimes'][dt] === undefined) {
+                meta['dailyTimes'][dt] = 0;
+            }
+            meta['dailyTimes'][dt] += delta;
             URLMeta[currentURL] = meta;
             kango.storage.setItem('URL_meta', URLMeta);
         }

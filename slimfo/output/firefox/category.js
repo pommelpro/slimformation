@@ -49,14 +49,29 @@ var categoryData = function() {
                 domains: {} 
             };
         }
-        category.time += elem['totalTime'];
-        category.readingScoreTotal += elem['readingScore'];
-        category.urlCount += 1;
-        category.urls[i] = elem['totalTime'];
-        if (category.domains[domain] == null) {
-            category.domains[domain] = 0; 
+        var cutoffDate = new Date();
+        cutoffDate.setDate(cutoffDate.getDate() - numReportingDays);
+        elem['totalTime'] = 0;
+        if (elem['dailyTimes'] == undefined) { return; }
+        $.each(elem['dailyTimes'], function(date, time) {
+            date = new Date(date);
+            if (date >= cutoffDate) {
+                console.log('Keep date: ' + date);
+                category.time += time;
+                elem['totalTime'] += time;
+            } else {
+                console.log('Ignore date: ' + date);
+            }
+        });
+        if (elem['totalTime'] > 0) {
+            category.readingScoreTotal += elem['readingScore'];
+            category.urlCount += 1;
+            category.urls[i] = elem['totalTime'];
+            if (category.domains[domain] == null) {
+                category.domains[domain] = 0; 
+            }
+            category.domains[domain] += elem['totalTime'];
         }
-        category.domains[domain] += elem['totalTime'];
     });
     _categories = categories;
     return categories;
