@@ -13,7 +13,7 @@
     "page": "background.html"
   }, 
   "homepage_url": "http://slimformation.knightlab.com", 
-  "version": "0.1.41", 
+  "version": "0.1.42", 
   "manifest_version": 2, 
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'", 
   "browser_action": {
